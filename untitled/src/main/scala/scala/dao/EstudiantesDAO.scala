@@ -11,14 +11,12 @@ import config.Database
 object EstudiantesDAO {
   def insert(estudiante: Estudiante): ConnectionIO[Int] = {
     sql"""
-     INSERT INTO alumnos (id, nombre, edad, calificacion, genero)
+     INSERT INTO alumnos (nombre, edad, calificacion, genero)
      VALUES (
-       ${estudiante.id},
        ${estudiante.nombre},
        ${estudiante.edad},
        ${estudiante.calificacion},
        ${estudiante.genero},
-
      )
    """.update.run
   }
@@ -28,4 +26,8 @@ object EstudiantesDAO {
       estudiante.traverse(t => insert(t).transact(xa))
     }
   }
+
+
+  def obtenerTodos: ConnectionIO[List[(Int, String, Int)]] =
+    sql"SELECT * FROM alumnos".query[(Int, String, Int)].to[List]
 }

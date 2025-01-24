@@ -1,10 +1,8 @@
 package scala.models
 
 case class Estudiante(
-                        id: Int,
                         nombre: String,
-                        edad: String,
+                        edad: Int,
                         calificacion: Double,
                         genero: String
-
                       )
