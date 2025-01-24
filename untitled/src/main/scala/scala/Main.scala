@@ -5,17 +5,17 @@ import kantan.csv._
 import kantan.csv.ops._
 import kantan.csv.generic._
 import java.io.File
-import models.Temperatura
-import dao.TemperaturaDAO
+import models.Estudiante
+import dao.EstudiantesDAO
 
 // Extiende de IOApp.Simple para manejar efectos IO y recursos de forma segura
 object Main extends IOApp.Simple {
-  val path2DataFile2 = "src/main/resources/data/temperaturas.csv"
+  val path2DataFile2 = "src/main/resources/data/estudiantes.csv"
 
   val dataSource = new File(path2DataFile2)
-    .readCsv[List, Temperatura](rfc.withHeader.withCellSeparator(','))
+    .readCsv[List, Estudiante](rfc.withHeader.withCellSeparator(','))
 
-  val temperaturas = dataSource.collect {
+  val estudiante = dataSource.collect {
     case Right(temperatura) => temperatura
   }
 
@@ -29,7 +29,7 @@ object Main extends IOApp.Simple {
    * @return IO[Unit] que representa la secuencia de operaciones
    */
   def run: IO[Unit] =
-    TemperaturaDAO.insertAll(temperaturas)
+    EstudiantesDAO.insertAll(estudiante)
       .flatMap(result => IO.println(s"Registros insertados: ${result.size}"))
 
 }
