@@ -27,14 +27,10 @@ object Main extends IOApp.Simple {
   }
 
   def run: IO[Unit] = {
-    Database.transactor.use { transactor =>
-      for {
-        result <- EstudiantesDAO.insertAll(estudiante) // Insertar estudiantes
-        _ <- IO.println(s"Registros insertados: ${result.size}")
-        usuarios <- EstudiantesDAO.obtenerTodos.transact(transactor) // Obtener todos los usuarios
-        _ <- IO.println(s"Usuarios: $usuarios")
-      } yield ()
-    }
+    //val(transactor, cleanup) = Database.transactor.allocated.unsafeRunSync(
+    EstudiantesDAO.insertAll(estudiante)
+      .flatMap(result => IO.println(s"Registros insertados: ${result.size}"))
+
   }
-}
+} 
 
