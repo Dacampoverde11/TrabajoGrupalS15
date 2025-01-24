@@ -16,7 +16,7 @@ object EstudiantesDAO {
        ${estudiante.nombre},
        ${estudiante.edad},
        ${estudiante.calificacion},
-       ${estudiante.genero},
+       ${estudiante.genero}
      )
    """.update.run
   }
@@ -26,8 +26,6 @@ object EstudiantesDAO {
       estudiante.traverse(t => insert(t).transact(xa))
     }
   }
-
-
-  def obtenerTodos: ConnectionIO[List[(Int, String, Int)]] =
-    sql"SELECT * FROM alumnos".query[(Int, String, Int)].to[List]
 }
+
+
